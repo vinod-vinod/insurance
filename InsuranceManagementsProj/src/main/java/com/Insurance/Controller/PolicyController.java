@@ -38,6 +38,7 @@ public class PolicyController {
 	@GetMapping("/{policyNumber}")
 	public PolicyDto getPolicyById(@PathVariable("policyNumber") Long policyNumber) throws EntityNotFoundException
 	{
+		System.out.println("This is policy by id");
 		return policyService.getPolicyId(policyNumber);
 		
 	}
