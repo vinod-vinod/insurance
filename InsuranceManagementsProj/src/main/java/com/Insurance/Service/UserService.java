@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.Insurance.Exception.EntityNotFoundException;
@@ -15,9 +16,12 @@ public class UserService {
 	@Autowired
 	private UserRepository userrepository;
 	
+	@Autowired 
+	private PasswordEncoder encoder;
 	public User saveUser(User user)
 	{
 //		System.out.println();
+		user.setPassword(encoder.encode(user.getPassword()));
 		return userrepository.save(user);	
 	}
 	public List<User> gellAllUsersList() {		
