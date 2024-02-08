@@ -23,17 +23,19 @@ public class User {
 @Id
 @GeneratedValue(strategy= GenerationType.SEQUENCE)
 private int userId;
+private String username;
 private String firstname;
 private String lastname;
 private String password;
 private String email;
 private String role;
-@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 @JsonIgnoreProperties("user")
 private List<Policy> policies = new ArrayList<>();
-public User(int userId, String firstname, String lastname, String email, String role) {
+public User(int userId, String username ,String firstname, String lastname, String email, String role) {
 	super();
 	this.userId = userId;
+	this.username=username;
 	this.firstname = firstname;
 	this.lastname = lastname;
 	this.email = email;

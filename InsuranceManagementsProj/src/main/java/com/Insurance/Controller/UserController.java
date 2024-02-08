@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Insurance.Exception.EntityNotFoundException;
+import com.Insurance.Exception.UseralreadyExists;
 import com.Insurance.Model.User;
 import com.Insurance.Service.UserService;
 
@@ -27,13 +28,13 @@ public class UserController {
 	private UserService userService;
 	
 	@PostMapping("/saveUser")
-	public ResponseEntity<User> registerUser(@RequestBody User user)
+	public ResponseEntity<User> registerUser(@RequestBody User user) throws UseralreadyExists
 	{
 		User savedUser=userService.saveUser(user);
 	    return	new ResponseEntity<User>(savedUser, HttpStatus.CREATED);
 	}
 	@GetMapping("/allusers")
-	@PreAuthorize("hasRole('ROLE_USER')")
+	@PreAuthorize("hasRole('User')")
 	public List<User> getAllUsers()
 	{
 		return userService.gellAllUsersList();

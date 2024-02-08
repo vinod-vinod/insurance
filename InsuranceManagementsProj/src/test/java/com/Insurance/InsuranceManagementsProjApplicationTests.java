@@ -19,6 +19,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.Insurance.Exception.EntityNotFoundException;
+import com.Insurance.Exception.UseralreadyExists;
 import com.Insurance.Model.User;
 import com.Insurance.Repository.UserRepository;
 import com.Insurance.Service.UserService;
@@ -37,30 +38,30 @@ class InsuranceManagementsProjApplicationTests {
 	public void gellAllUsersListTest()
 	{
 		when(userRepository.findAll())
-	    .thenReturn(Stream.of(new User(1,"soujanya", "vadde", "soujanyavadde@gmail.com", "Admin", new ArrayList<>()))
+	    .thenReturn(Stream.of(new User(1,"soujbh","soujanya", "vadde","soujanya@123", "soujanyavadde@gmail.com", "Admin", new ArrayList<>()))
 	                      .collect(Collectors.toList()));
 		assertEquals(1, userService.gellAllUsersList().size());
 	}
 	
 	@Test
-	public void saveUserTest()
+	public void saveUserTest() throws UseralreadyExists
 	{
-		User user= new User(1,"soujanya", "vadde", "soujanyavadde@gmail.com", "Admin");
+		User user= new User(1,"soujabh","soujanya", "vadde", "soujanyavadde@gmail.com", "Admin");
 		when(userRepository.save(user)).thenReturn(user);
 		assertEquals(user, userService.saveUser(user));
 	}
 	@Test
 	public void deleteTest() throws EntityNotFoundException
 	{
-		User user= new User(1,"soumya", "bhoomandla", "soumya@gmail.com", "Admin");
+		User user= new User(1,"soum","soumya", "bhoomandla", "soumya@gmail.com", "Admin");
 	    when(userRepository.findById(user.getUserId())).thenReturn(Optional.of(user));
 		assertEquals("User deleted with Id: 1",userService.delete(user.getUserId()) );
 	}
 	@Test
 	public void updateUserDataTest() throws EntityNotFoundException
 	{
-		 User user= new User(1,"soumya", "bhoomandla", "soumya@gmail.com", "Admin");
-		 User updatedUserData = new User(1, "soujanya", "vadde", "soujanyavadde@gmail.com", "Admin");
+		 User user= new User(1,"soum","soumya", "bhoomandla", "soumya@gmail.com", "Admin");
+		 User updatedUserData = new User(1,"soujabh", "soujanya", "vadde", "soujanyavadde@gmail.com", "Admin");
 		 when(userRepository.findById(user.getUserId())).thenReturn(Optional.of(user));
 		 
 		 

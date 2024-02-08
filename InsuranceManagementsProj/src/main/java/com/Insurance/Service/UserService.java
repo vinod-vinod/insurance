@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.Insurance.Exception.EntityNotFoundException;
+import com.Insurance.Exception.UseralreadyExists;
 import com.Insurance.Model.User;
 import com.Insurance.Repository.UserRepository;
 
@@ -18,11 +19,27 @@ public class UserService {
 	
 	@Autowired 
 	private PasswordEncoder encoder;
-	public User saveUser(User user)
+	boolean flag;
+	public User saveUser(User user) throws UseralreadyExists
 	{
 //		System.out.println();
-		user.setPassword(encoder.encode(user.getPassword()));
-		return userrepository.save(user);	
+		List<User> userlist = userrepository.findAll();
+		if(null != userlist) {
+			for(User u:userlist) {
+				if(u.getUsername().equals(user.getUsername())){
+					flag=true;
+				}
+				else {
+					flag=false;
+				}
+			}
+		}
+		if(flag)
+			throw  new UseralreadyExists("User Already Exists with this username");
+		else {
+			user.setPassword(encoder.encode(user.getPassword()));
+			return userrepository.save(user);	
+		}
 	}
 	public List<User> gellAllUsersList() {		
 	return userrepository.findAll();
