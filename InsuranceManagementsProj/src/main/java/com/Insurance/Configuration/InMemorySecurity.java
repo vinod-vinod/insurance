@@ -33,10 +33,12 @@ public class InMemorySecurity {
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception
 	{
 		
-		return httpSecurity.csrf().disable()
-           .authorizeHttpRequests()
-               .requestMatchers("/users/allusers").permitAll().and().authorizeHttpRequests(). // Public endpoints
-               requestMatchers("/policies/getAllPolicies").authenticated()
+		return httpSecurity.csrf().disable().authorizeHttpRequests()
+	               .requestMatchers("/users/saveUser").permitAll().and()
+//           .authorizeHttpRequests()
+//               .requestMatchers("/users/allusers").permitAll().and()
+               .authorizeHttpRequests(). // Public endpoints
+               requestMatchers("/policies/getAllPolicies","/users/allusers").authenticated()
            .and()
            .formLogin().and().build();
 	}
