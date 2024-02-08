@@ -32,6 +32,7 @@ public class PolicyController {
 	@GetMapping("/getAllPolicies")
 	public List<PolicyDto> getAllPolicies()
 	{
+		System.out.println("get all policies");
 		return policyService.getAllPolicies();
 		
 	}
