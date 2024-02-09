@@ -65,7 +65,6 @@ public class UserService {
 	public User updateUserData(User user, int id) throws EntityNotFoundException {
 		System.out.println("this is from updateUserData "+user);
 		System.out.println("this is id from updateUserData"+id);
-	
 		User found =getUserId(id);
 		System.out.println(found);
 		found.setFirstname(user.getFirstname());

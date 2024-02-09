@@ -32,16 +32,14 @@ private String role;
 @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 @JsonIgnoreProperties("user")
 private List<Policy> policies = new ArrayList<>();
-public User(int userId, String username ,String firstname, String lastname, String email, String role) {
+public User(int userId, String username ,String firstname, String lastname,String password, String email, String role) {
 	super();
 	this.userId = userId;
 	this.username=username;
 	this.firstname = firstname;
 	this.lastname = lastname;
+	this.password=password;
 	this.email = email;
 	this.role = role;
 }
-
-
-
 }

@@ -2,6 +2,7 @@ package com.Insurance;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -46,22 +47,28 @@ class InsuranceManagementsProjApplicationTests {
 	@Test
 	public void saveUserTest() throws UseralreadyExists
 	{
-		User user= new User(1,"soujabh","soujanya", "vadde", "soujanyavadde@gmail.com", "Admin");
+//		    User user = new User(1, "soujabh", "soujanya", "vadde", "soujanyavadde@gmail.com", "Admin");
+//		    when(userRepository.save(user)).thenThrow(new UseralreadyExists("User already exists"));
+//
+//		    assertThrows(UseralreadyExists.class, () -> userService.saveUser(user));
+////		}
+
+		User user= new User(1,"soujabh","soujanya", "vadde","soujanya@123", "soujanyavadde@gmail.com", "Admin");
 		when(userRepository.save(user)).thenReturn(user);
 		assertEquals(user, userService.saveUser(user));
 	}
 	@Test
 	public void deleteTest() throws EntityNotFoundException
 	{
-		User user= new User(1,"soum","soumya", "bhoomandla", "soumya@gmail.com", "Admin");
+		User user= new User(1,"soum","soumya", "bhoomandla","soumya@123", "soumya@gmail.com", "Admin");
 	    when(userRepository.findById(user.getUserId())).thenReturn(Optional.of(user));
 		assertEquals("User deleted with Id: 1",userService.delete(user.getUserId()) );
 	}
 	@Test
 	public void updateUserDataTest() throws EntityNotFoundException
 	{
-		 User user= new User(1,"soum","soumya", "bhoomandla", "soumya@gmail.com", "Admin");
-		 User updatedUserData = new User(1,"soujabh", "soujanya", "vadde", "soujanyavadde@gmail.com", "Admin");
+		 User user= new User(1,"soum","soumya", "bhoomandla","soumya@123", "soumya@gmail.com", "Admin");
+		 User updatedUserData = new User(1,"soujabh", "soujanya", "vadde","soujanya@123", "soujanyavadde@gmail.com", "Admin");
 		 when(userRepository.findById(user.getUserId())).thenReturn(Optional.of(user));
 		 
 		 
