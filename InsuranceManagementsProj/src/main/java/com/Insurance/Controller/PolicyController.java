@@ -31,7 +31,7 @@ public class PolicyController {
     private UserService userService;
 	
 	@GetMapping("/getAllPolicies")
-	@PreAuthorize("hasRole('Admin')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public List<PolicyDto> getAllPolicies()
 	{
 		System.out.println("get all policies");

@@ -1,6 +1,8 @@
 package com.Insurance.Dto;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import com.Insurance.Model.Policy;
 import com.Insurance.Model.User;
@@ -8,10 +10,12 @@ import com.Insurance.Model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class PolicyDto {
     private Long policyNumber;
     private String coverageType;
@@ -38,6 +42,12 @@ public class PolicyDto {
 
         return policyDto;
     }
-
-   
+    public static List<PolicyDto> convertToPOlicyDtoList(List<Policy> policies) {
+//    	System.out.println(policies);
+        return policies.stream()
+                .map(PolicyDto::convertToPolicyDto)
+                .collect(Collectors.toList());
+    }
 }
+   
+

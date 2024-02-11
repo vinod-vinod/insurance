@@ -29,6 +29,7 @@ public class UserDetailsDto implements UserDetails{
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
+		System.out.println(authorities);
 		return authorities;
 	}
 

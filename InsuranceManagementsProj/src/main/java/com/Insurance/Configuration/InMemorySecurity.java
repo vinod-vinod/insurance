@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -18,42 +19,41 @@ import com.Insurance.Service.UserDetailServiceRepo;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class InMemorySecurity {
 
 	@Bean
-	public UserDetailsService userDetailsService(/*PasswordEncoder encoder*/)
-	{
+	public UserDetailsService userDetailsService(/* PasswordEncoder encoder */) {
 //		Commented because we are getting details from database
 //		UserDetails admin =User.withUsername("vinod").password(encoder.encode("vinod")).roles("ADMIN").build();
 //		UserDetails user =User.withUsername("user").password(encoder.encode("user")).roles("USER").build();
-//		
-//		return new InMemoryUserDetailsManager(admin,user);
-		
-		return new UserDetailServiceRepo();
+//			return new InMemoryUserDetailsManager(admin,user);
+		UserDetailServiceRepo userdetail = new UserDetailServiceRepo();
+//		return new UserDetailServiceRepo();
+//		System.out.println(userdetail);
+		return userdetail;
 	}
+
 	@Bean
-	public PasswordEncoder passwordEncoder()
-	{
+	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+
 	@Bean
 	public AuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
 		daoAuthenticationProvider.setUserDetailsService(userDetailsService());
 		daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+//		System.out.println(daoAuthenticationProvider);
 		return daoAuthenticationProvider;
 	}
-	
+
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception
-	{
-		
-		return httpSecurity.csrf().disable().authorizeHttpRequests()
-	               .requestMatchers("/users/saveUser").permitAll().and()
-               .authorizeHttpRequests(). 
-               requestMatchers("/policies/getAllPolicies","/users/allusers").authenticated()
-           .and()
-           .formLogin().and().build();
+	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+
+		return httpSecurity.csrf().disable().authorizeHttpRequests().requestMatchers("/users/saveUser").permitAll()
+				.and().authorizeHttpRequests().requestMatchers("/policies/getAllPolicies", "/users/allusers")
+				.authenticated().and().formLogin().and().build();
 	}
 
 }

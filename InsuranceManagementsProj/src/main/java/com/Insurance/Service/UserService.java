@@ -2,11 +2,13 @@ package com.Insurance.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.Insurance.Dto.UserDto;
 import com.Insurance.Exception.EntityNotFoundException;
 import com.Insurance.Exception.UseralreadyExists;
 import com.Insurance.Model.User;
@@ -41,8 +43,9 @@ public class UserService {
 			return userrepository.save(user);	
 		}
 	}
-	public List<User> gellAllUsersList() {		
-	return userrepository.findAll();
+	public List<UserDto> gellAllUsersList() {		
+		List<User> dtolist= userrepository.findAll();
+	 return dtolist.stream().map(dto->UserDto.convertToDtowithPolicies(dto)).collect(Collectors.toList());
 	}
 	
 	public String delete(int id) throws EntityNotFoundException 

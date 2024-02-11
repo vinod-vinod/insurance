@@ -22,7 +22,7 @@ public class UserDetailServiceRepo implements UserDetailsService{
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
 		Optional<User> userinfo= userepo.findByUsername(username);
-		
+		System.out.println(userinfo);
 		return userinfo.map(UserDetailsDto::new).orElseThrow(()->new UsernameNotFoundException("User Not Found"));
 	}
 

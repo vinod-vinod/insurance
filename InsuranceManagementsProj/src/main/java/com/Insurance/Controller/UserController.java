@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.Insurance.Dto.UserDto;
 import com.Insurance.Exception.EntityNotFoundException;
 import com.Insurance.Exception.UseralreadyExists;
 import com.Insurance.Model.User;
@@ -34,9 +35,10 @@ public class UserController {
 	    return	new ResponseEntity<User>(savedUser, HttpStatus.CREATED);
 	}
 	@GetMapping("/allusers")
-	@PreAuthorize("hasRole('User')")
-	public List<User> getAllUsers()
+	@PreAuthorize("hasRole('ROLE_USER')")
+	public List<UserDto> getAllUsers()
 	{
+		System.out.println("get all users called");
 		return userService.gellAllUsersList();
 	}
 	

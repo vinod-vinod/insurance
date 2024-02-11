@@ -36,7 +36,21 @@ public class Policy {
 	    private User user;
 
 	    // Constructors, getters, setters
-	}
+	    @Override
+	    public String toString() {
+	        return "Policy{" +
+	                "policyNumber=" + policyNumber +
+	                ", coverageType='" + coverageType + '\'' +
+	                ", premium=" + premium +
+	                ", startDate=" + startDate +
+	                ", endDate=" + endDate +
+	                ", insuranceName='" + insuranceName + '\'' +
+	                // Avoid calling User.toString() to prevent infinite recursion
+	                ", user=" + (user != null ? user.getUserId() : null) +
+	                '}';
+	    }
+	
+}
 
 
 
